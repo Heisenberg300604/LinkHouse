@@ -1,0 +1,44 @@
+name: Linkhouse checks
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+      TEST_DIRECT_URL: ${{ secrets.TEST_DIRECT_URL }}
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+      CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+      CLERK_WEBHOOK_SIGNING_SECRET: ${{ secrets.CLERK_WEBHOOK_SIGNING_SECRET }}
+      E2E_CLERK_USER_USERNAME: ${{ secrets.E2E_CLERK_USER_USERNAME }}
+      E2E_CLERK_USER_PASSWORD: ${{ secrets.E2E_CLERK_USER_PASSWORD }}
+      E2E_CLERK_USER_B_USERNAME: ${{ secrets.E2E_CLERK_USER_B_USERNAME }}
+      E2E_CLERK_USER_B_PASSWORD: ${{ secrets.E2E_CLERK_USER_B_PASSWORD }}
+      NEXT_PUBLIC_CLERK_SIGN_IN_URL: /sign-in
+      NEXT_PUBLIC_CLERK_SIGN_UP_URL: /sign-up
+      NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: /dashboard
+      NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL: /onboarding
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test:unit
+      - run: npm run test:components
+      - run: npm run db:test:migrate
+      - run: npm run test:integration
+      - run: npm run test:coverage
+      - run: npm run build
+        if: always()
+      - run: npx playwright install --with-deps chromium
+        if: always()
+      - run: npm run test:e2e
+        if: always()
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linkhouse-test-runs
+          path: runs/

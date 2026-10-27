@@ -1,0 +1,64 @@
+generator client {
+ provider = "prisma-client-js"
+}
+datasource db {
+ provider = "postgresql"
+ url = env("DATABASE_URL")
+ directUrl = env("DIRECT_URL")
+}
+model User {
+ id String @id @default(cuid())
+ clerkId String @unique
+ email String
+ username String? @unique
+ displayName String @default("")
+ bio String @default("")
+ avatarUrl String @default("")
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+ sections Section[]
+ links Link[]
+ views PageView[]
+}
+model Section {
+ id String @id @default(cuid())
+ userId String
+ title String
+ position Int @default(0)
+ isVisible Boolean @default(true)
+ createdAt DateTime @default(now())
+ user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ links Link[]
+ @@index([userId, position])
+}
+model Link {
+ id String @id @default(cuid())
+ userId String
+ sectionId String?
+ title String
+ url String
+ description String?
+ icon String?
+ position Int @default(0)
+ isVisible Boolean @default(true)
+ createdAt DateTime @default(now())
+ user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ section Section? @relation(fields: [sectionId], references: [id], onDelete: SetNull)
+ clicks LinkClick[]
+ @@index([userId, sectionId, position])
+}
+model LinkClick {
+ id String @id @default(cuid())
+ linkId String
+ createdAt DateTime @default(now())
+ referrerHost String?
+ link Link @relation(fields: [linkId], references: [id], onDelete: Cascade)
+ @@index([linkId, createdAt])
+}
+model PageView {
+ id String @id @default(cuid())
+ userId String
+ createdAt DateTime @default(now())
+ user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ @@index([userId, createdAt])
+}
