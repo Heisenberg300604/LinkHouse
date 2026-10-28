@@ -449,10 +449,12 @@ export function Settings() {
     [pending, startTransition] = useTransition();
   return (
     <>
-      <section className="panel">
+      <section className="panel settings-account-panel">
         <h2>Account settings</h2>
         <p>Manage your email, password and account security.</p>
-        <UserProfile routing="hash" />
+        <div className="clerk-profile-root">
+          <UserProfile routing="hash" />
+        </div>
       </section>
       <section className="panel">
         <h2>Delete account</h2>

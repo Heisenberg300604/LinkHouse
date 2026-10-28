@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import '@clerk/ui/themes/shadcn.css';
 :root {
   --background: #fafaf9;
   --surface: #fff;
@@ -510,6 +509,10 @@ small {
 .clerk-card .cl-formField { margin-bottom: 16px; }
 .clerk-card .cl-formFieldRow { gap: 7px; }
 .clerk-footer-link { color: var(--accent); font-weight: 600; }
+.clerk-profile-root {
+  width: 100%;
+  min-width: 0;
+}
 .form-stack {
   display: flex;
   flex-direction: column;
@@ -585,6 +588,36 @@ small {
 .sidebar-bottom .row {
   font-size: 12px;
   gap: 8px;
+}
+.account-controls {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+.account-controls > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.signout-button {
+  width: 100%;
+  margin-top: 12px;
+  justify-content: flex-start;
+  padding: 9px 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.signout-button:hover {
+  color: #b91c1c;
+  background: #fef2f2;
+}
+.dark .signout-button:hover {
+  background: #3a1717;
+}
+.dashboard-signout-mobile {
+  display: none;
 }
 .dashboard-main {
   margin-left: 230px;
@@ -851,6 +884,46 @@ small {
   position: absolute;
   right: 20px;
   top: 20px;
+}
+.demo-page {
+  background: radial-gradient(circle at 50% -10%, #4f46e514, transparent 34%), var(--background);
+}
+.demo-back {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+.demo-back:hover {
+  color: var(--accent);
+}
+.demo-kicker {
+  justify-content: center;
+  color: var(--accent);
+  font-size: 10px;
+  margin: 0 0 12px;
+}
+.demo-links {
+  margin: 30px 0 28px;
+}
+.demo-link-mark {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+.demo-cta {
+  margin: 6px auto 0;
 }
 .empty {
   padding: 42px 20px;
@@ -1125,6 +1198,16 @@ th:last-child {
   .dashboard-header {
     height: 62px;
     padding: 0 22px;
+  }
+  .dashboard-header > a {
+    display: none;
+  }
+  .dashboard-signout-mobile {
+    display: inline-flex;
+    margin: 0;
+    width: auto;
+    padding: 7px 9px;
+    color: var(--muted);
   }
   .dashboard-content {
     padding: 28px 16px;

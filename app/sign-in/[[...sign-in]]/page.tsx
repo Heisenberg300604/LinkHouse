@@ -1,4 +1,4 @@
-import { ClerkFailed, ClerkLoaded, SignIn } from '@clerk/nextjs';
+import { ClerkFailed, ClerkLoaded, ClerkLoading, SignIn } from '@clerk/nextjs';
 import { AuthFormFailed, AuthFormLoading, AuthShell } from '@/components/auth-shell';
 
 export default function Page() {
@@ -10,18 +10,11 @@ export default function Page() {
     >
       {process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ? (
         <>
-          <AuthFormLoading />
+          <ClerkLoading>
+            <AuthFormLoading />
+          </ClerkLoading>
           <ClerkLoaded>
-            <SignIn
-              appearance={{
-                elements: {
-                  rootBox: 'clerk-root', card: 'clerk-card', headerTitle: 'clerk-title', headerSubtitle: 'clerk-subtitle',
-                  socialButtonsBlockButton: 'clerk-social-button', dividerLine: 'clerk-divider-line', dividerText: 'clerk-divider-text',
-                  formFieldLabel: 'clerk-field-label', formFieldInput: 'clerk-field-input', formButtonPrimary: 'clerk-primary-button',
-                  footerActionLink: 'clerk-footer-link',
-                },
-              }}
-            />
+            <SignIn />
           </ClerkLoaded>
           <ClerkFailed><AuthFormFailed /></ClerkFailed>
         </>

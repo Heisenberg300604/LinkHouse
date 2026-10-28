@@ -3,6 +3,7 @@ import { UserButton } from '@clerk/nextjs';
 import { Link2, UserRound, BarChart3, Settings, ArrowUpRight } from 'lucide-react';
 import { requireUser } from '@/lib/auth';
 import { ThemeToggle } from '@/components/providers';
+import { SignOutControl } from '@/components/sign-out-control';
 export const dynamic = 'force-dynamic';
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const user = await requireUser();
@@ -37,11 +38,12 @@ export default async function Layout({ children }: { children: React.ReactNode }
             A little space.
             <br />A lot of possibility.
           </p>
-          <div className="row">
+          <div className="account-controls">
             <UserButton />
             <span>{user.displayName || user.username}</span>
             <ThemeToggle />
           </div>
+          <SignOutControl />
         </div>
       </aside>
       <div className="dashboard-main">
@@ -50,6 +52,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
           <NextLink href={'/' + user.username} target="_blank" rel="noreferrer">
             View public page <ArrowUpRight size={16} />
           </NextLink>
+          <SignOutControl className="dashboard-signout-mobile" />
         </header>
         <main className="dashboard-content">{children}</main>
       </div>
