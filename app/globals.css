@@ -505,6 +505,10 @@ small {
 .clerk-field-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px #4f46e51f; }
 .clerk-primary-button { min-height: 46px; border-radius: 10px; background: var(--accent); box-shadow: none; font-weight: 600; }
 .clerk-primary-button:hover { background: #4338ca; }
+.dark .clerk-social-button,
+.dark .clerk-field-input { color: var(--text); }
+.clerk-card .cl-formField { margin-bottom: 16px; }
+.clerk-card .cl-formFieldRow { gap: 7px; }
 .clerk-footer-link { color: var(--accent); font-weight: 600; }
 .form-stack {
   display: flex;
@@ -760,7 +764,8 @@ small {
 }
 .public-page {
   min-height: 100vh;
-  padding: 65px 24px 25px;
+  position: relative;
+  padding: 88px 24px 36px;
 }
 .public-profile {
   width: 100%;
@@ -834,8 +839,13 @@ small {
 .public-footer {
   font-size: 14px;
   justify-content: center;
+  gap: 7px;
   color: var(--muted);
-  margin: 40px auto 10px;
+  margin: 42px auto 10px;
+}
+.public-footer .brand-icon {
+  padding: 4px;
+  margin-right: 0;
 }
 .public-theme {
   position: absolute;
@@ -1144,7 +1154,7 @@ th:last-child {
     padding: 22px;
   }
   .public-page {
-    padding-top: 65px;
+    padding: 76px 18px 30px;
   }
   .stats-grid {
     gap: 14px;

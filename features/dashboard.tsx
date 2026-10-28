@@ -19,7 +19,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { GripVertical, Plus, Eye, EyeOff, Pencil, Trash2 } from 'lucide-react';
+import { GripVertical, Plus, Eye, EyeOff, Pencil, Trash2, Link2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { mutate, deleteAccount } from '@/lib/actions';
 import { reorder, sectionSchema } from '@/lib/logic/core';
@@ -421,7 +421,8 @@ export function PublicProfile({
       {user.bio && <p className="bio">{user.bio}</p>}
       <SectionList links={links} sections={sections} />
       <NextLink className="wordmark public-footer" href="/">
-        ⌂ linkhouse
+        <span className="brand-icon"><Link2 size={13} /></span>
+        linkhouse<span className="brand-period">.</span>
       </NextLink>
     </div>
   );
