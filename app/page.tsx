@@ -30,7 +30,7 @@ const faqs = [
   ],
   [
     'What do the analytics show?',
-    'Page views and link clicks per day over 7, 30 or 90 days, a comparison with the previous period, and your most clicked links. Linkhouse does not collect device, location or visitor identity.',
+    'Page views and link clicks per day over 7, 30 or 90 days, a comparison with the previous period, and your most clicked links. The numbers in your dashboard are plain counts: they don’t include device, location or visitor identity.',
   ],
   [
     'Can I change my address later?',
@@ -199,7 +199,7 @@ export default async function Home() {
                     'Daily page views and link clicks',
                     'Change versus the previous period',
                     'Top links ranked by clicks',
-                    'No visitor tracking: counts only',
+                    'Plain counts, no visitor profiles',
                   ].map((t) => (
                     <li key={t}>
                       <Check size={16} aria-hidden />

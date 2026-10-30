@@ -187,7 +187,7 @@ export function AnalyticsView({
       <p className="footnote muted">
         {sample
           ? 'Sample data for illustration only. '
-          : 'A page view is counted each time your public page loads, including repeat visits and your own. A click is counted when someone opens a link from your page. Clicks on deleted links are removed with the link. Linkhouse does not collect device, location or visitor identity. '}
+          : 'A page view is counted each time your public page loads, including repeat visits and your own. A click is counted when someone opens a link from your page. Clicks on deleted links are removed with the link. These numbers are plain counts and don’t include device, location or visitor identity. '}
         Days are shown in UTC.
       </p>
     </>

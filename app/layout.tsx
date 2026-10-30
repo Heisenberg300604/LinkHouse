@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
+import { Analytics } from '@vercel/analytics/next';
 import { Providers } from '@/components/providers';
 import { clerkAppearance } from '@/lib/clerk-appearance';
 import './globals.css';
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         ) : (
           content
         )}
+        <Analytics />
       </body>
     </html>
   );
