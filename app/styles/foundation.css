@@ -1,0 +1,262 @@
+/* ───────────────────────────────────────────────────────────────
+   Foundation: design tokens, base elements, typography.
+   Everything else in app/styles builds on these variables.
+   ─────────────────────────────────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --background: #faf9f7;
+  --surface: #ffffff;
+  --soft: #f4f2ee; /* hover + quiet fills */
+  --border: #e8e5e0;
+  --border-strong: #d6d2cb;
+
+  /* Text */
+  --text: #1c1917;
+  --muted: #66605a; /* 5.6:1 on --background */
+  --subtle: #8c857e; /* decorative / disabled only */
+
+  /* Brand */
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-soft: #eef0ff;
+  --accent-text: #4338ca;
+  --on-accent: #ffffff;
+  --ring: rgb(79 70 229 / 0.32);
+
+  /* Status */
+  --success: #15803d;
+  --success-soft: #ecfdf3;
+  --warning: #b45309;
+  --warning-soft: #fffbeb;
+  --danger: #b91c1c;
+  --danger-soft: #fef2f2;
+  --info: #1d4ed8;
+  --info-soft: #eff6ff;
+
+  /* Data visualisation (distinguishable in both themes) */
+  --chart-clicks: #4f46e5;
+  --chart-views: #0f766e;
+  --chart-grid: #ece9e4;
+
+  /* Elevation */
+  --shadow-xs: 0 1px 2px rgb(28 25 23 / 0.05);
+  --shadow-sm: 0 1px 3px rgb(28 25 23 / 0.07), 0 1px 2px rgb(28 25 23 / 0.04);
+  --shadow-md: 0 8px 20px -6px rgb(28 25 23 / 0.12), 0 2px 6px -2px rgb(28 25 23 / 0.06);
+  --shadow-lg: 0 28px 56px -16px rgb(28 25 23 / 0.22), 0 8px 16px -8px rgb(28 25 23 / 0.08);
+
+  /* Shape */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* Layout */
+  --sidebar-w: 15rem;
+  --topbar-h: 3.5rem;
+  --content-max: 72rem;
+  --marketing-max: 72rem;
+  --gutter: clamp(1rem, 4vw, 2rem);
+
+  /* Type */
+  --font-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur: 180ms;
+
+  color-scheme: light;
+}
+
+.dark {
+  --background: #0c0a09;
+  --surface: #161312;
+  --soft: #201c1a;
+  --border: #2b2623;
+  --border-strong: #3d3733;
+
+  --text: #faf9f7;
+  --muted: #a8a19a;
+  --subtle: #78716c;
+
+  --accent: #6366f1;
+  --accent-hover: #7578f4;
+  --accent-soft: #1e1f4a;
+  --accent-text: #a5b4fc;
+  --ring: rgb(129 140 248 / 0.4);
+
+  --success: #4ade80;
+  --success-soft: #0d2418;
+  --warning: #fbbf24;
+  --warning-soft: #2a1f08;
+  --danger: #f87171;
+  --danger-soft: #2f1414;
+  --info: #93c5fd;
+  --info-soft: #11213a;
+
+  --chart-clicks: #818cf8;
+  --chart-views: #2dd4bf;
+  --chart-grid: #26211f;
+
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.5);
+  --shadow-md: 0 8px 20px -6px rgb(0 0 0 / 0.55);
+  --shadow-lg: 0 28px 56px -16px rgb(0 0 0 / 0.7);
+
+  color-scheme: dark;
+}
+
+/* ── Base ─────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 5rem;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+::selection {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+/* ── Typography ───────────────────────────────────────────────── */
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
+}
+h1,
+h2,
+h3,
+h4 {
+  color: var(--text);
+  font-weight: 600;
+  text-wrap: balance;
+}
+h1 {
+  font-size: var(--text-2xl);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+h2 {
+  font-size: var(--text-lg);
+  line-height: 1.35;
+  letter-spacing: -0.012em;
+}
+h3 {
+  font-size: var(--text-md);
+  line-height: 1.4;
+  letter-spacing: -0.006em;
+}
+p {
+  color: var(--muted);
+  text-wrap: pretty;
+}
+small {
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+.t-display {
+  font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+.t-title {
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.028em;
+  font-weight: 600;
+}
+.t-lead {
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.1875rem);
+  line-height: 1.65;
+  color: var(--muted);
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.num {
+  font-variant-numeric: tabular-nums;
+}
+.muted {
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

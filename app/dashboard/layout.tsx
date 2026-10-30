@@ -1,61 +1,65 @@
-import NextLink from 'next/link';
+import Link from 'next/link';
 import { UserButton } from '@clerk/nextjs';
-import { Link2, UserRound, BarChart3, Settings, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { requireUser } from '@/lib/auth';
+import { Brand } from '@/components/brand';
 import { ThemeToggle } from '@/components/providers';
 import { SignOutControl } from '@/components/sign-out-control';
+import { AppNav } from '@/components/app-nav';
+import { CopyLinkButton } from '@/components/copy-link-button';
+import { Badge } from '@/components/ui/badge';
+
 export const dynamic = 'force-dynamic';
+
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const user = await requireUser();
+  const publicPath = '/' + user.username;
   return (
-    <div className="dashboard-shell">
-      <aside className="sidebar">
-        <NextLink href="/" className="wordmark">
-          <Link2 />
-          linkhouse.
-        </NextLink>
-        <p className="eyebrow workspace-label">YOUR WORKSPACE</p>
-        <nav>
-          <NextLink href="/dashboard">
-            <Link2 size={19} />
-            Links
-          </NextLink>
-          <NextLink href="/dashboard/profile">
-            <UserRound size={19} />
-            Profile
-          </NextLink>
-          <NextLink href="/dashboard/analytics">
-            <BarChart3 size={19} />
-            Analytics
-          </NextLink>
-          <NextLink href="/dashboard/settings">
-            <Settings size={19} />
-            Settings
-          </NextLink>
-        </nav>
-        <div className="sidebar-bottom">
-          <p className="muted">
-            A little space.
-            <br />A lot of possibility.
-          </p>
-          <div className="account-controls">
+    <div className="app-shell">
+      <aside className="app-sidebar">
+        <Brand href="/dashboard" />
+        <AppNav variant="sidebar" />
+        <div className="app-sidebar-foot">
+          <div className="app-user">
             <UserButton />
-            <span>{user.displayName || user.username}</span>
+            <div className="app-user-copy">
+              <strong className="truncate">{user.displayName || user.username}</strong>
+              <small className="truncate">@{user.username}</small>
+            </div>
             <ThemeToggle />
           </div>
           <SignOutControl />
         </div>
       </aside>
-      <div className="dashboard-main">
-        <header className="dashboard-header">
-          <span>My Linkhouse</span>
-          <NextLink href={'/' + user.username} target="_blank" rel="noreferrer">
-            View public page <ArrowUpRight size={16} />
-          </NextLink>
-          <SignOutControl className="dashboard-signout-mobile" />
+      <div className="app-main">
+        <header className="app-topbar">
+          <Brand href="/dashboard" className="app-topbar-brand" />
+          <div className="app-address">
+            <Badge tone="success" dot>
+              Live
+            </Badge>
+            <span className="truncate">linkhouse{publicPath}</span>
+            <CopyLinkButton path={publicPath} />
+          </div>
+          <div className="app-topbar-actions">
+            <Link
+              className="btn btn-secondary btn-sm"
+              href={publicPath}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View page <ArrowUpRight size={14} aria-hidden />
+            </Link>
+            <span className="app-topbar-user">
+              <UserButton />
+            </span>
+          </div>
         </header>
-        <main className="dashboard-content">{children}</main>
+        <main className="app-content" id="main">
+          {children}
+        </main>
       </div>
+      <AppNav variant="tabs" />
     </div>
   );
 }

@@ -204,20 +204,21 @@ scenario(
   },
 );
 scenario(
-  'Public demo renders links',
+  'Interactive demo works without an account',
   {
     category: 'happy',
     severity: 'critical',
     feature: 'public',
-    description: 'The seeded public profile renders its sections and redirect links.',
+    description: 'The demo shows sample data and edits stay local to the page.',
   },
   async ({ page }) => {
     await page.goto('/demo');
     await expect(page.getByRole('heading', { name: 'Alex Morgan' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'My portfolio' })).toHaveAttribute(
-      'href',
-      '/r/demo-link-0',
-    );
+    await expect(page.getByText('Demo · sample data')).toBeVisible();
+    await page.getByRole('button', { name: 'Hide My portfolio' }).click();
+    await expect(page.getByRole('button', { name: 'Show My portfolio' })).toBeVisible();
+    await page.getByRole('tab', { name: 'Analytics' }).click();
+    await expect(page.getByRole('heading', { name: 'Activity' })).toBeVisible();
   },
 );
 scenario(

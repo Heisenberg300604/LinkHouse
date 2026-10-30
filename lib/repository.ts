@@ -1,6 +1,7 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import { db } from './db';
 import { checkLimit, linkSchema, sectionSchema, profileSchema } from './logic/core';
+import { buildSeries, periodBounds, type LinkStat } from './logic/analytics';
 type Tx = Prisma.TransactionClient;
 async function lock(tx: Tx, userId: string) {
   await tx.$queryRaw`SELECT id FROM "User" WHERE id = ${userId} FOR UPDATE`;
@@ -162,4 +163,60 @@ export async function seedDemo(client: PrismaClient = db) {
       });
     return user;
   });
+}
+
+type DailyCount = { day: Date; count: number };
+
+/**
+ * Everything the analytics page shows, for the last `days` UTC days and the equal period before it.
+ * Daily buckets are computed in SQL so cost stays flat as traffic grows; every query is scoped to `userId`.
+ */
+export async function analyticsReport(
+  userId: string,
+  days: number,
+  now = new Date(),
+  client: PrismaClient = db,
+) {
+  const { start, previousStart } = periodBounds(days, now);
+  const [viewRows, clickRows, previousViews, previousClicks, links] = await Promise.all([
+    client.$queryRaw<DailyCount[]>`
+      SELECT date_trunc('day', "createdAt") AS day, COUNT(*)::int AS count
+      FROM "PageView"
+      WHERE "userId" = ${userId} AND "createdAt" >= ${start} AND "createdAt" <= ${now}
+      GROUP BY 1`,
+    client.$queryRaw<DailyCount[]>`
+      SELECT date_trunc('day', c."createdAt") AS day, COUNT(*)::int AS count
+      FROM "LinkClick" c JOIN "Link" l ON l.id = c."linkId"
+      WHERE l."userId" = ${userId} AND c."createdAt" >= ${start} AND c."createdAt" <= ${now}
+      GROUP BY 1`,
+    client.pageView.count({ where: { userId, createdAt: { gte: previousStart, lt: start } } }),
+    client.linkClick.count({
+      where: { link: { userId }, createdAt: { gte: previousStart, lt: start } },
+    }),
+    client.link.findMany({
+      where: { userId },
+      select: {
+        id: true,
+        title: true,
+        url: true,
+        _count: { select: { clicks: { where: { createdAt: { gte: start, lte: now } } } } },
+      },
+    }),
+  ]);
+  const series = buildSeries(days, now, viewRows, clickRows);
+  const linkStats: LinkStat[] = links.map((l) => ({
+    id: l.id,
+    title: l.title,
+    url: l.url,
+    clicks: l._count.clicks,
+  }));
+  return {
+    days,
+    series,
+    views: series.reduce((sum, p) => sum + p.views, 0),
+    clicks: series.reduce((sum, p) => sum + p.clicks, 0),
+    previousViews,
+    previousClicks,
+    links: linkStats,
+  };
 }

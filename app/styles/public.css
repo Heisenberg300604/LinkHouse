@@ -1,0 +1,183 @@
+/* ───────────────────────────────────────────────────────────────
+   Public profile. Sizes are in em so the same markup renders at
+   full size on /username and scaled inside phone previews
+   (set font-size on the container).
+   ─────────────────────────────────────────────────────────────── */
+.public-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(3.5rem, 8vw, 5.5rem) 1rem 2rem;
+  background:
+    radial-gradient(
+      60rem 24rem at 50% -8rem,
+      color-mix(in srgb, var(--accent) 9%, transparent),
+      transparent 70%
+    ),
+    var(--background);
+  font-size: 1rem;
+}
+.public-theme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+.public-profile {
+  width: 100%;
+  max-width: 30em;
+  margin: 0 auto;
+  text-align: center;
+}
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 6em;
+  height: 6em;
+  margin: 0 auto 1.125em;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-weight: 600;
+  box-shadow:
+    0 0 0 0.1875rem var(--background),
+    0 0 0 0.25rem var(--border-strong);
+}
+.avatar-initial {
+  font-size: 2.25em;
+  line-height: 1;
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.public-profile h1 {
+  margin: 0 0 0.375em;
+  font-size: 1.75em;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.public-handle {
+  margin: 0 0 0.75em;
+  font-size: 0.875em;
+  color: var(--muted);
+}
+.bio {
+  max-width: 26em;
+  margin: 0 auto 1.75em;
+  font-size: 0.9375em;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.public-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625em;
+  text-align: left;
+}
+.public-link {
+  display: flex;
+  align-items: center;
+  gap: 0.875em;
+  min-width: 0;
+  padding: 0.8125em 1em;
+  border: 1px solid var(--border);
+  border-radius: 0.875em;
+  background: var(--surface);
+  box-shadow: var(--shadow-xs);
+  font-size: 1em;
+  transition:
+    transform var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+.public-link:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  box-shadow: var(--shadow-sm);
+}
+.public-link:active {
+  transform: translateY(0);
+}
+.public-link-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 0.625em;
+  background: var(--soft);
+  color: var(--text);
+}
+.public-link > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+.public-link strong {
+  display: block;
+  font-size: 0.9375em;
+  font-weight: 500;
+}
+.public-link small {
+  display: block;
+  margin-top: 0.125em;
+  font-size: 0.8em;
+  overflow-wrap: anywhere;
+}
+.public-link > svg:last-child {
+  flex: none;
+  color: var(--subtle);
+  transition:
+    color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+.public-link:hover > svg:last-child {
+  color: var(--accent-text);
+  transform: translate(1px, -1px);
+}
+.public-section {
+  margin-top: 1.5em;
+}
+.section-title {
+  margin: 0 0 0.625em;
+  text-align: left;
+  font-size: 0.75em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.public-empty {
+  padding: 2em 1em;
+  border: 1px dashed var(--border-strong);
+  border-radius: 0.875em;
+  font-size: 0.9375em;
+}
+.public-footer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375em;
+  margin: 2.5em auto 0.5em;
+  font-size: 0.8125em;
+  font-weight: 500;
+  color: var(--muted);
+}
+.public-footer:hover {
+  color: var(--accent-text);
+}
+.public-footer .brand-mark {
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 0.4em;
+}
+.public-notice {
+  margin: auto;
+  max-width: 26rem;
+  text-align: center;
+}

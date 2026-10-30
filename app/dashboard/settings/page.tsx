@@ -1,14 +1,13 @@
 import { Settings } from '@/features/dashboard';
+import { PageHeader } from '@/components/ui/page-header';
+
+export const metadata = { title: 'Settings' };
+
 export default function Page() {
   return (
-    <div className="narrow">
-      <div className="page-heading">
-        <div>
-          <h1>Settings</h1>
-          <p>Your account, on your terms.</p>
-        </div>
-      </div>
+    <>
+      <PageHeader title="Settings" description="Appearance, sign-in and security, and your data." />
       <Settings />
-    </div>
+    </>
   );
 }

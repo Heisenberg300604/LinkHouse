@@ -25,11 +25,13 @@ export async function generateMetadata({ params }: Props) {
 export default async function Page({ params }: Props) {
   if (!process.env.DATABASE_URL)
     return (
-      <main className="auth-page">
-        <div className="panel">
-          <h1>Your page is almost ready.</h1>
+      <main className="status-page" id="main">
+        <div>
+          <h1>Your page is almost ready</h1>
           <p>Configure Neon and run the migrations and seed to load public profiles.</p>
-          <NextLink href="/">Back to Linkhouse</NextLink>
+          <NextLink className="btn btn-secondary" href="/">
+            Back to Linkhouse
+          </NextLink>
         </div>
       </main>
     );
@@ -43,12 +45,13 @@ export default async function Page({ params }: Props) {
     }
   });
   return (
-    <main className="public-page">
+    <main className="public-page" id="main">
       <div className="public-theme">
         <ThemeToggle />
       </div>
       <PublicProfile
         user={user}
+        audience="visitor"
         links={[...user.links, ...user.sections.flatMap((s) => s.links)]}
         sections={user.sections}
       />

@@ -8,11 +8,11 @@ export function SignOutControl({ className = '' }: { className?: string }) {
 
   return (
     <button
-      className={`signout-button ${className}`}
+      className={'btn btn-ghost btn-sm signout-button ' + className}
       type="button"
       onClick={() => signOut({ redirectUrl: '/' })}
     >
-      <LogOut size={16} />
+      <LogOut size={15} aria-hidden />
       Sign out
     </button>
   );

@@ -159,3 +159,33 @@ it('calls deletion only after explicit confirmation', async () => {
   );
   expect(deleteAccount).toHaveBeenCalledTimes(1);
 });
+
+it('filters links with the search field and explains an empty result', async () => {
+  render(<DashboardEditor user={user} links={[link]} sections={[]} />);
+  await userEvent.type(screen.getByRole('searchbox', { name: 'Search links' }), 'zzz');
+  expect(screen.queryByRole('button', { name: 'Edit My work' })).not.toBeInTheDocument();
+  expect(screen.getByText(/No links match/)).toBeVisible();
+});
+
+it('shows 30-day clicks on a link row', () => {
+  render(<DashboardEditor user={user} links={[link]} sections={[]} clicks={{ l: 12 }} />);
+  expect(screen.getByTitle('Clicks in the last 30 days')).toHaveTextContent('12');
+});
+
+it('only enables saving after the profile changes and can discard edits', async () => {
+  render(<ProfileEditor user={user} />);
+  expect(screen.getByRole('button', { name: 'Save profile' })).toBeDisabled();
+  await userEvent.type(screen.getByLabelText('Display name'), '!');
+  expect(screen.getByRole('button', { name: 'Save profile' })).toBeEnabled();
+  await userEvent.click(screen.getByRole('button', { name: 'Discard' }));
+  expect(screen.getByLabelText('Display name')).toHaveValue('Alice');
+});
+
+it('keeps the profile form dirty and shows the reason when saving fails', async () => {
+  vi.mocked(mutate).mockResolvedValue({ ok: false, error: 'Username taken' });
+  render(<ProfileEditor user={user} />);
+  await userEvent.type(screen.getByLabelText('Display name'), '!');
+  await userEvent.click(screen.getByRole('button', { name: 'Save profile' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Username taken');
+  expect(screen.getByRole('button', { name: 'Save profile' })).toBeEnabled();
+});

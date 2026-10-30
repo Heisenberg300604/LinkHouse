@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { LINK_LIMIT, PROFILE_BIO_LIMIT, SECTION_LIMIT } from './limits';
 const reserved = new Set([
   'admin',
   'api',
@@ -61,7 +62,9 @@ export const sectionSchema = z.object({
 export const profileSchema = z.object({
   username: usernameSchema,
   displayName: z.string().trim().min(1).max(80),
-  bio: z.string().max(160),
+  bio: z
+    .string()
+    .max(PROFILE_BIO_LIMIT, 'Bio must be ' + PROFILE_BIO_LIMIT + ' characters or fewer'),
   avatarUrl: z.union([z.literal(''), urlSchema]),
 });
 export function platformIcon(value: string): string {
@@ -90,6 +93,6 @@ export function reorder(ids: string[], active: string, over: string): string[] {
   return result;
 }
 export function checkLimit(count: number, kind: 'links' | 'sections'): void {
-  const limit = kind === 'links' ? 200 : 30;
+  const limit = kind === 'links' ? LINK_LIMIT : SECTION_LIMIT;
   if (count >= limit) throw new Error('You can have at most ' + limit + ' ' + kind);
 }

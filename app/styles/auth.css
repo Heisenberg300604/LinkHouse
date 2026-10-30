@@ -1,0 +1,218 @@
+/* ───────────────────────────────────────────────────────────────
+   Authentication + onboarding shell, and standalone status pages.
+   ─────────────────────────────────────────────────────────────── */
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  background: var(--background);
+}
+.auth-intro {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: clamp(2rem, 4vw, 3.5rem);
+  overflow: hidden;
+  background: #1b1747;
+  color: #fff;
+}
+.auth-intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(34rem 22rem at 100% 0%, rgb(99 102 241 / 0.5), transparent 70%),
+    radial-gradient(28rem 20rem at 0% 100%, rgb(79 70 229 / 0.35), transparent 70%);
+}
+.auth-intro > * {
+  position: relative;
+}
+.auth-brand,
+.auth-brand .brand-period {
+  color: #fff;
+}
+.auth-brand .brand-mark {
+  background: #fff;
+  color: #1b1747;
+}
+.auth-intro-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 13.5rem;
+  gap: 2rem;
+  align-items: center;
+  margin: auto 0;
+  padding: 2rem 0;
+}
+.auth-eyebrow {
+  margin: 0 0 0.875rem;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b7b4f5;
+}
+.auth-intro-copy h2 {
+  margin: 0 0 1.5rem;
+  color: #fff;
+  font-size: clamp(1.75rem, 1.2rem + 1.4vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+.auth-intro-copy ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: #dcdaf7;
+}
+.auth-intro-copy li {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+.auth-intro-copy li svg {
+  flex: none;
+  color: #a5b4fc;
+}
+.auth-intro .mock-phone {
+  background: rgb(255 255 255 / 0.08);
+  border-color: rgb(255 255 255 / 0.18);
+  box-shadow: 0 24px 48px -16px rgb(0 0 0 / 0.5);
+}
+.auth-intro .phone-screen {
+  color: var(--text);
+  max-height: 24rem;
+  min-height: 22rem;
+}
+.auth-assurance {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: var(--text-sm);
+  color: #b7b4f5;
+}
+
+.auth-form-area {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 5vw, 4rem) 2rem;
+}
+.auth-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.auth-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--muted);
+}
+.auth-back:hover {
+  color: var(--text);
+}
+.auth-form-wrap {
+  width: 100%;
+  max-width: 25rem;
+  margin: auto;
+  padding: 2rem 0;
+  animation: rise-in 300ms var(--ease) both;
+}
+.auth-mobile-brand {
+  display: none;
+  margin-bottom: 2rem;
+}
+.auth-heading {
+  margin-bottom: 1.75rem;
+}
+.auth-heading h1 {
+  margin-bottom: 0.375rem;
+  font-size: var(--text-3xl);
+  letter-spacing: -0.03em;
+}
+.auth-heading p:last-child {
+  margin: 0;
+  font-size: var(--text-base);
+}
+.auth-heading .eyebrow {
+  margin-bottom: 0.625rem;
+}
+.auth-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.auth-loading-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.5rem 0 0.75rem;
+}
+.auth-loading-divider span {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.auth-loading-divider i {
+  width: 1.5rem;
+  height: 0.5rem;
+  border-radius: 4px;
+  background: var(--soft);
+}
+.auth-form-wrap .form-stack {
+  gap: 1rem;
+}
+
+@media (max-width: 1023px) {
+  .auth-page {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .auth-intro {
+    display: none;
+  }
+  .auth-mobile-brand {
+    display: inline-flex;
+  }
+  .auth-form-wrap {
+    margin: 0 auto;
+  }
+}
+
+/* Standalone status pages (404, error, setup notices) */
+.status-page {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+.status-page > div {
+  width: 100%;
+  max-width: 28rem;
+}
+.status-page .brand {
+  margin-bottom: 2.5rem;
+}
+.status-code {
+  margin: 0 0 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--accent-text);
+}
+.status-page h1 {
+  margin-bottom: 0.5rem;
+  font-size: var(--text-3xl);
+  letter-spacing: -0.03em;
+}
+.status-page p {
+  margin-bottom: 1.5rem;
+  font-size: var(--text-md);
+}

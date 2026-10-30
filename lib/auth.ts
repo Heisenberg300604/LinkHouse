@@ -1,7 +1,8 @@
 import { auth, currentUser, clerkClient } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+import { cache } from 'react';
 import { db } from './db';
-export async function getOrCreateCurrentUser() {
+export const getOrCreateCurrentUser = cache(async function getOrCreateCurrentUser() {
   if (!process.env.CLERK_SECRET_KEY) redirect('/sign-in');
   const { userId } = await auth();
   if (!userId) redirect('/sign-in');
@@ -20,7 +21,7 @@ export async function getOrCreateCurrentUser() {
       avatarUrl: user.imageUrl,
     },
   });
-}
+});
 export async function requireUser() {
   const user = await getOrCreateCurrentUser();
   if (!user.username) redirect('/onboarding');

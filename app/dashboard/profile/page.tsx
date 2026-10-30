@@ -1,19 +1,21 @@
 import { requireUser } from '@/lib/auth';
+import { publicProfile } from '@/lib/repository';
+import { PageHeader } from '@/components/ui/page-header';
 import { ProfileEditor } from '@/features/dashboard';
+
+export const metadata = { title: 'Profile' };
+
 export default async function Page() {
   const user = await requireUser();
+  const page = await publicProfile(user.username!);
   return (
-    <div className="narrow">
-      <div className="page-heading">
-        <div>
-          <p className="eyebrow">THE PERSON BEHIND THE LINKS</p>
-          <h1>Your profile</h1>
-          <p>Make a first impression that feels like you.</p>
-        </div>
-      </div>
-      <div className="panel">
-        <ProfileEditor user={user} />
-      </div>
-    </div>
+    <>
+      <PageHeader title="Profile" description="How you appear to everyone who visits your page." />
+      <ProfileEditor
+        user={user}
+        links={page ? [...page.links, ...page.sections.flatMap((s) => s.links)] : []}
+        sections={page?.sections ?? []}
+      />
+    </>
   );
 }
