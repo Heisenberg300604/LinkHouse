@@ -46,6 +46,7 @@ import { Field } from '@/components/ui/field';
 import { PageHeader } from '@/components/ui/page-header';
 import { BrandMark } from '@/components/brand';
 import { LinkForm, LinkCard, SectionList, ProfileForm } from './editor';
+import { ShareButton } from './share';
 
 export function Sortable({
   id,
@@ -261,6 +262,9 @@ export function DashboardEditor({
             <Button variant="ghost" className="mobile-preview" onClick={() => setPreview(!preview)}>
               {preview ? 'Hide preview' : 'Show preview'}
             </Button>
+            {user.username && (
+              <ShareButton username={user.username} displayName={user.displayName} />
+            )}
             <Button
               variant="secondary"
               onClick={() => {

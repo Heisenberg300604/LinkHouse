@@ -8,6 +8,7 @@ import { SignOutControl } from '@/components/sign-out-control';
 import { AppNav } from '@/components/app-nav';
 import { CopyLinkButton } from '@/components/copy-link-button';
 import { Badge } from '@/components/ui/badge';
+import { ShareButton } from '@/features/share';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,6 +43,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
             <CopyLinkButton path={publicPath} />
           </div>
           <div className="app-topbar-actions">
+            <ShareButton username={user.username!} displayName={user.displayName} />
             <Link
               className="btn btn-secondary btn-sm"
               href={publicPath}

@@ -596,3 +596,79 @@
 .username-status[data-state='error'] {
   color: var(--danger);
 }
+
+/* Share / QR dialog */
+.share-qr {
+  display: grid;
+  place-items: center;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: #fff; /* a QR code must stay black on white in every theme */
+  box-shadow: var(--shadow-sm);
+}
+.share-qr svg {
+  width: min(13.5rem, 62vw);
+  height: auto;
+}
+.share-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.875rem 0 1rem;
+  line-height: 1.35;
+  text-align: center;
+}
+.share-name strong {
+  color: var(--text);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.share-name span {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.notice {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  margin: 0 0 1rem;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--warning) 35%, transparent);
+  border-radius: var(--radius-md);
+  background: var(--warning-soft);
+  color: var(--warning);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+.notice svg {
+  flex: none;
+  margin-top: 0.0625rem;
+}
+.notice code {
+  font-size: 0.95em;
+}
+.share-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.share-actions .share-primary {
+  grid-column: 1 / -1;
+  --btn-h: 2.5rem;
+}
+.share-link {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.share-link .input {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--text-sm);
+}
+.share-hint {
+  margin-top: 0.75rem;
+}
